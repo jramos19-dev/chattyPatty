@@ -1,3 +1,4 @@
 <template>
-  <div>Messages go here</div>
+  <Message v-for="n in 10" :key="n" />
+  <NewMessage />
 </template>
