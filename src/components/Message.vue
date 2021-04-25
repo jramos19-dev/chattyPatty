@@ -1,6 +1,7 @@
 <template>
   <div
-    class="container mx-auto flex my-3 rounded-full"
+    @click.stop="copyMessage"
+    class="container mx-auto flex my-3 rounded-full transition transform cursor-pointer hover:scale-105"
     :class="isUser ? 'bg-amber-300' : 'bg-green-500'"
   >
     <div>
@@ -19,11 +20,19 @@
       </div>
     </div>
   </div>
+  <div
+    class="bg-yellow-300 fixed py-4 px-8 rounded-full bottom-16 right-4 z-10"
+    v-if="copied"
+  >
+    <p>Message Copied!</p>
+  </div>
 </template>
 
 <script setup>
 import { defineProps, computed, ref } from "vue"
+import { useClipboard } from "@vueuse/core"
 import { authentication } from "~/helpers/useFireBase"
+import { useMotions } from "@vueuse/motion"
 
 const { user } = authentication()
 
@@ -41,4 +50,14 @@ const props = defineProps({
     }),
   },
 })
+
+const source = ref("")
+const { copy, copied } = useClipboard({ source })
+
+const copyMessage = () => {
+  source.value = `${props.message.text} by ${props.message.userName}`
+  copy()
+}
+
+const motions = useMotions()
 </script>

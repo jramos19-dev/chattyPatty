@@ -1,5 +1,7 @@
 <template>
-  <div class="bg-gray-500 text-orange-700 py-6 text-xl">
+  <div
+    class="fixed top-0 left-0 right-0 bg-gray-500 text-orange-700 py-6 text-xl z-10"
+  >
     <div class="containter bg-yellow-300 flex justify-between items-center">
       <div class="brand flex space-x-2 text-3xl">
         <mdi:message-processing-outline class="text-orange-500" />

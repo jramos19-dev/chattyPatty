@@ -1,6 +1,6 @@
 <template>
   <div
-    class="absolute bottom-0 left-0 right-0 bg-blue-400 flex focus-within:ring-yellow-800"
+    class="fixed bottom-0 left-0 right-0 bg-blue-400 flex focus-within:ring-yellow-800"
   >
     <input
       v-model="newMessage"
@@ -18,14 +18,18 @@
 </template>
 
 <script setup>
-import { ref } from "vue"
+import { ref, defineEmit } from "vue"
 import { database } from "~/helpers/useFireBase"
 const { sendMessage } = database()
 const newMessage = ref(null)
+
+const emit = defineEmit(["added"])
+
 const send = () => {
   if (newMessage.value?.length > 0) {
     sendMessage(newMessage.value)
     newMessage.value = null
+    emit("added")
   }
 }
 </script>
